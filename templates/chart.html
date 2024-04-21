@@ -10,6 +10,9 @@
 
     <script>
         var plotData = JSON.parse('{{ plot_data|safe }}');
+        var urls = [
+            'https://www.mof.go.jp/zaisei/current-situation/index.html'
+        ]
 
         var trace1 = {
             x: plotData.years,
