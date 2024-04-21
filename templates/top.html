@@ -1,90 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tree Diagram with D3.js</title>
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<style>
-  .node {
-    cursor: pointer;
-  }
-
-  .node circle {
-    fill: #fff;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-  }
-
-  .node text {
-    font: 10px sans-serif;
-  }
-
-  .link {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 1.5px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <title>Mermaid</title>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize ({
+          startOnLoad: true, 
+          theme: 'defalt'
+      });
+    </script>
 </head>
 <body>
-  <svg width="960" height="500"></svg>
-  <script>
-    var treeData = {
-      "name": "Node 1",
-      "children": [
-        {
-          "name": "Node 2",
-          "children": [
-            {"name": "Node 3"},
-            {"name": "Node 4"}
-          ]
-        },
-        {"name": "Node 5"}
-      ]
-    };
+    <div class="mermaid">
+      graph LR
+      A --100yen--> B
+      B --> C
+      C --> D
+      D --> F
+      E --> F
+      F --> G
+      G --> H
+      H --> I
+      I --> A
 
-    var margin = {top: 20, right: 90, bottom: 30, left: 90},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    var svg = d3.select("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var tree = d3.tree()
-        .size([height, width]);
-
-    var root = d3.hierarchy(treeData);
-    tree(root);
-
-    var nodes = root.descendants(),
-        links = root.links();
-
-    var link = svg.selectAll(".link")
-        .data(links)
-      .enter().append("path")
-        .attr("class", "link")
-        .attr("d", d3.linkHorizontal()
-            .x(function(d) { return d.y; })
-            .y(function(d) { return d.x; }));
-
-    var node = svg.selectAll(".node")
-        .data(nodes)
-      .enter().append("g")
-        .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-    node.append("circle")
-        .attr("r", 4.5);
-
-    node.append("text")
-        .attr("dy", ".31em")
-        .attr("x", function(d) { return d.children ? -13 : 13; })
-        .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
-        .text(function(d) { return d.data.name; });
-  </script>
+    </div>
 </body>
 </html>
