@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 # Create your views here.
 
-def show_top():
-  1
+def show_top(request):
+  return render(request, 'test.html')
