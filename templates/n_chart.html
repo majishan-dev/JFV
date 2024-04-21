@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>歳入歳出推移</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;max-width:900px;height:500px;"></div>
+
+    <script>
+        var plotData = JSON.parse('{{ plot_data|safe }}');
+
+        var trace1 = {
+            x: plotData.years,
+            y: plotData.revenues,
+            mode: 'lines+markers',
+            name: '歳入',
+            marker: {
+                color: 'blue',
+                size: 8
+            },
+            hoverinfo: 'y+name'
+        };
+
+        var trace2 = {
+            x: plotData.years,
+            y: plotData.expenditures,
+            mode: 'lines+markers',
+            name: '歳出',
+            marker: {
+                color: 'red',
+                size: 8
+            },
+            hoverinfo: 'y+name'
+        };
+
+        var layout = {
+            title: '歳入と歳出の推移',
+            xaxis: {
+                title: '年度',
+                dtick: 1,
+                tick0: plotData.years[0],
+                range: [plotData.years[0], plotData.years[plotData.years.length - 1]]
+            },
+            yaxis: {
+                title: '額 (百万円)'
+            },
+            hovermode: 'closest'
+        };
+
+        Plotly.newPlot('chart', [trace1, trace2], layout);
+    </script>
+</body>
+</html>
